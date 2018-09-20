@@ -14,8 +14,9 @@ class User extends Authenticatable
      *
      * @var array
      */
+    // các field này có thể thay đổi giá trị bởi người dùng
     protected $fillable = [
-        'name', 'email', 'password',
+        'full_name', 'email', 'password', 'phone', 'address',
     ];
 
     /**
@@ -23,7 +24,13 @@ class User extends Authenticatable
      *
      * @var array
      */
+    // không hiển thị 2 field là password và remember_token trong các record
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    // người dùng không được phép thay đổi
+    protected $guarded = [
+        'id'
     ];
 }
