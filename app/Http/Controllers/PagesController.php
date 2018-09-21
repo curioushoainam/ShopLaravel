@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use \App\Slide;
 use \App\Products;
 use \App\Type_products;
+use Session;
+use \App\Cart;
 
 class PagesController extends Controller
 {
 	// the controller is used to demo. It is not a part of the website
     function getHome(){
         $slide = Slide::all();      
-        $newProduct = Products::where('new',1)->paginate(4); 
+        $newProduct = Products::where('best_seller',1)->paginate(4); 
         $promotionProduct = Products::where('promotion_price','<>',0)->paginate(8);           
         // return view('pages.home',['slide'=>$slide]);
     	return view('pages.home',compact('slide','newProduct','promotionProduct'));
@@ -41,6 +43,15 @@ class PagesController extends Controller
 
      function getContact(){
     	return view('pages.contact');
+    }
+
+    function getAddToCart(Request $req, $id){
+        $sanpham = Products::find($id);
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->add($sanpham, $id);
+        $req->session()->put('cart',$cart);
+        return redirect()->back();
     }
 
 }

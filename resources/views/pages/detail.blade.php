@@ -57,7 +57,7 @@
 								<option value="4">4</option>
 								<option value="5">5</option>
 							</select>
-							<a class="add-to-cart" href="#"><i class="fa fa-shopping-cart"></i></a>
+							<a class="add-to-cart" href="{{route('addtocart',$sanpham->id)}}"><i class="fa fa-shopping-cart"></i></a>
 							<div class="clearfix"></div>
 						</div>
 					</div>
@@ -105,7 +105,7 @@
 										</p>
 									</div>
 									<div class="single-item-caption">
-										<a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+										<a class="add-to-cart pull-left" href="{{route('addtocart',$prod->id)}}"><i class="fa fa-shopping-cart"></i></a>
 										<a class="beta-btn primary" href="{{route('detail',$prod->id)}}">Details <i class="fa fa-chevron-right"></i></a>
 										<div class="clearfix"></div>
 									</div>

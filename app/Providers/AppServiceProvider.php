@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use \App\Type_products;
+use Session;
+use \App\Cart;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,15 @@ class AppServiceProvider extends ServiceProvider
             $loai_sp = Type_products::all();
            
             $menu->with('loai_sp', $loai_sp);
+        });
+
+        view()->composer('layout.header', function($view){
+            if(Session('cart')){
+                $oldCart = Session::get('cart');
+                $cart = new Cart($oldCart);
+
+                $view->with(['cart'=>Session::get('cart'), 'prod_cart'=>$cart->items, 'amount'=>$cart->amount, 'total'=>$cart->total]);
+            }
         });
     }
 

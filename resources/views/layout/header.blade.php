@@ -32,44 +32,33 @@
 				</div>
 
 				<div class="beta-comp">
+					@if(Session::has('cart'))
 					<div class="cart">
-						<div class="beta-select"><i class="fa fa-shopping-cart"></i> Giỏ hàng (Trống) <i class="fa fa-chevron-down"></i></div>
+						<div class="beta-select"><i class="fa fa-shopping-cart"></i> Giỏ hàng ({{session('cart')->count }}) <i class="fa fa-chevron-down"></i></div>
 						<div class="beta-dropdown cart-body">
+							
+							@foreach($prod_cart as $prod)
+								{{-- {{ viewArr($prod) }}						 --}}
 							<div class="cart-item">
 								<div class="media">
-									<a class="pull-left" href="#"><img src="public/assets/dest/images/products/cart/1.png" alt=""></a>
+									<a class="pull-left" href="{{route('detail',$prod['item']->id)}}"><img src="public/image/product/{{$prod['item']->image}}" alt=""></a>
 									<div class="media-body">
-										<span class="cart-item-title">Sample Woman Top</span>
-										<span class="cart-item-options">Size: XS; Colar: Navy</span>
-										<span class="cart-item-amount">1*<span>$49.50</span></span>
+										<span class="cart-item-title">{{$prod['item']->name}}</span>
+
+										<span class="cart-item-amount">{{$prod['qty']}} * <span>
+										@if($prod['item']->promotion_price)
+											{{number_format($prod['item']->promotion_price)}}
+										@else
+											{{number_format($prod['item']->unit_price)}}
+										@endif
+
+										</span><small>VND</small></span>
 									</div>
 								</div>
 							</div>
-
-							<div class="cart-item">
-								<div class="media">
-									<a class="pull-left" href="#"><img src="public/assets/dest/images/products/cart/2.png" alt=""></a>
-									<div class="media-body">
-										<span class="cart-item-title">Sample Woman Top</span>
-										<span class="cart-item-options">Size: XS; Colar: Navy</span>
-										<span class="cart-item-amount">1*<span>$49.50</span></span>
-									</div>
-								</div>
-							</div>
-
-							<div class="cart-item">
-								<div class="media">
-									<a class="pull-left" href="#"><img src="public/assets/dest/images/products/cart/3.png" alt=""></a>
-									<div class="media-body">
-										<span class="cart-item-title">Sample Woman Top</span>
-										<span class="cart-item-options">Size: XS; Colar: Navy</span>
-										<span class="cart-item-amount">1*<span>$49.50</span></span>
-									</div>
-								</div>
-							</div>
-
+							@endforeach		
 							<div class="cart-caption">
-								<div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">$34.55</span></div>
+								<div class="cart-total text-right">Tổng tiền: <span class="cart-total-value">{{number_format(session('cart')->amount) }} </span><small>VND</small></div>
 								<div class="clearfix"></div>
 
 								<div class="center">
@@ -79,6 +68,7 @@
 							</div>
 						</div>
 					</div> <!-- .cart -->
+					@endif
 				</div>
 			</div>
 			<div class="clearfix"></div>
