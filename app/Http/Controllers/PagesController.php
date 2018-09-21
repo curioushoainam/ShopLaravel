@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use \App\Slide;
 use \App\Products;
+use \App\Type_products;
 
 class PagesController extends Controller
 {
@@ -18,8 +19,12 @@ class PagesController extends Controller
     	return view('pages.home',compact('slide','newProduct','promotionProduct'));
     }
 
-    function getProduct(){
-    	return view('pages.product');
+    function getProduct($idType){
+        $sp_theo_loai = Products::where('id_type',$idType)->get();
+        $sp_khac = Products::where('id_type','<>',$idType)->paginate(3);
+        $loai_sp = Type_products::where('id',$idType)->first();
+        $loai = Type_products::all();
+    	return view('pages.product', compact('sp_theo_loai','sp_khac','loai_sp','loai'));
     }
 
     function getDetail($id){

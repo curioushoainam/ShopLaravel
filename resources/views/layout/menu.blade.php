@@ -5,10 +5,10 @@
 		<nav class="main-menu">
 			<ul class="l-inline ov">
 				<li><a href="{{route('home')}}">Trang chủ</a></li>
-				<li><a href="{{route('productType')}}">Loại sản phẩm</a>
+				<li><a>Loại sản phẩm</a>
 					<ul class="sub-menu">
-						@foreach($loai_sp as $sp)
-						<li><a href="">{{$sp->name}}</a></li>
+						@foreach($loai_sp as $lsp)
+						<li><a href="{{route('productType',$lsp->id)}}">{{$lsp->name}}</a></li>
 						@endforeach						
 					</ul>
 				</li>
