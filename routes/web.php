@@ -13,12 +13,14 @@
 
 Route::get('/','PagesController@getHome');
 
-Route::get('home', 'PagesController@getHome');
+Route::get('trang-chu', 'PagesController@getHome')->name('home');
 
-Route::get('product', 'PagesController@getProduct');
-Route::get('product/{id}', 'PagesController@getDetail');
+Route::get('loai-san-pham', 'PagesController@getProduct')->name('productType');
+Route::get('chi-tiet-san-pham/{id}', 'PagesController@getDetail')->name('detail');
 
-Route::get('about', 'PagesController@getAbout');
+Route::get('gioi-thieu', 'PagesController@getAbout')->name('about');
 
-Route::get('contact', 'PagesController@getContact');
+Route::get('lien-he', 'PagesController@getContact')->name('contact');
+
+
 
