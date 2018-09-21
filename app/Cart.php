@@ -42,4 +42,14 @@ class Cart extends Model
 		$this->count = count($this->items);		
 	}
 
+	function removeItem($id){
+		$this->total -= $this->items[$id]['qty'];
+		unset($this->items[$id]);
+		$this->amount = 0;
+		foreach($this->items as $id => $cart){
+			$this->amount += $cart['subamount'];
+		}	
+		$this->count = count($this->items);
+	}
+
 }

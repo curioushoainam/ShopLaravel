@@ -54,4 +54,16 @@ class PagesController extends Controller
         return redirect()->back();
     }
 
+    function getRemoveFromCart(Request $req, $id){
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        if(count($cart->items) > 0)
+            $req->session()->put('cart',$cart);
+        else
+            $req->session()->forget('cart');
+
+        return redirect()->back();
+    }
+
 }

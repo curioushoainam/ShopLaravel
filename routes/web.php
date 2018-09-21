@@ -23,4 +23,5 @@ Route::get('gioi-thieu', 'PagesController@getAbout')->name('about');
 Route::get('lien-he', 'PagesController@getContact')->name('contact');
 
 Route::get('them-vao-gio-hang/{id}', 'PagesController@getAddToCart')->name('addtocart');
+Route::get('xoa-sp-khoi-gio-hang/{id}', 'PagesController@getRemoveFromCart')->name('removeItem');
 

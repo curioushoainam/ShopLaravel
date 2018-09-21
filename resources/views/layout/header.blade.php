@@ -20,7 +20,7 @@
 	<div class="header-body">
 		<div class="container beta-relative">
 			<div class="pull-left">
-				<a href="index.html" id="logo"><img src="public/assets/dest/images/logo-cake.png" width="200px" alt=""></a>
+				<a href="{{route('home')}}" id="logo"><img src="public/assets/dest/images/logo-cake.png" width="200px" alt=""></a>
 			</div>
 			<div class="pull-right beta-components space-left ov">
 				<div class="space10">&nbsp;</div>
@@ -32,14 +32,17 @@
 				</div>
 
 				<div class="beta-comp">
-					@if(Session::has('cart'))
+					
 					<div class="cart">
-						<div class="beta-select"><i class="fa fa-shopping-cart"></i> Giỏ hàng ({{session('cart')->count }}) <i class="fa fa-chevron-down"></i></div>
+						<div class="beta-select"><i class="fa fa-shopping-cart"></i> Giỏ hàng (	
+							{{ Session::has('cart') ? session('cart')->count : 0 }} )<i class="fa fa-chevron-down"></i></div>
+						@if(Session::has('cart'))
 						<div class="beta-dropdown cart-body">
-							
+							{{-- {{ viewArr($prod_cart) }} --}}
 							@foreach($prod_cart as $prod)
-								{{-- {{ viewArr($prod) }}						 --}}
+														
 							<div class="cart-item">
+								<a class="cart-item-delete" href="{{route('removeItem',$prod['item']->id)}}" ><i class="fa fa-times"></i></a>
 								<div class="media">
 									<a class="pull-left" href="{{route('detail',$prod['item']->id)}}"><img src="public/image/product/{{$prod['item']->image}}" alt=""></a>
 									<div class="media-body">
@@ -67,8 +70,9 @@
 								</div>
 							</div>
 						</div>
+						@endif
 					</div> <!-- .cart -->
-					@endif
+					
 				</div>
 			</div>
 			<div class="clearfix"></div>
