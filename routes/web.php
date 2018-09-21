@@ -25,3 +25,6 @@ Route::get('lien-he', 'PagesController@getContact')->name('contact');
 Route::get('them-vao-gio-hang/{id}', 'PagesController@getAddToCart')->name('addtocart');
 Route::get('xoa-sp-khoi-gio-hang/{id}', 'PagesController@getRemoveFromCart')->name('removeItem');
 
+Route::get('dat-hang', 'PagesController@getCheckout')->name('checkout');
+Route::post('dat-hang', 'PagesController@postCheckout')->name('setcheckout');
+

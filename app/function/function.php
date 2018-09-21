@@ -85,7 +85,7 @@ function viewArr($arr){
 }
 
 
-function errAlert($errors){
+function errors($errors){
 	// the function shows errors warning on the browser
 	// input : an array $errors
 	// output: html code displays errors' warning

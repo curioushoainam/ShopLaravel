@@ -20,7 +20,7 @@ class Cart extends Model
 	}
 
 	function add($item, $id){
-			$cart = ['qty'=>0, 'subamount' => 0, 'item' => $item];
+			$cart = ['qty'=>0, 'subamount' => 0, 'item' => $item];		// next project : replace subamount with price
 		if($this->items){
 			if(array_key_exists($id, $this->items)){
 				$cart = $this->items[$id];
