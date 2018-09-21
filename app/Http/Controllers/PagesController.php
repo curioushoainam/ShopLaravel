@@ -27,8 +27,12 @@ class PagesController extends Controller
     	return view('pages.product', compact('sp_theo_loai','sp_khac','loai_sp','loai'));
     }
 
-    function getDetail($id){
-    	return view('pages.detail');
+    function getDetail(Request $req){
+        $sanpham = Products::where('id',$req->id)->first();
+        $sp_lien_quan = Products::where('id_type',$sanpham->typeProduct->id)->paginate(6);
+        $sp_moi = Products::orderByDesc('id')->take(6)->get();
+        $sp_bs = Products::where('best_seller',1)->take(6)->get();
+    	return view('pages.detail',['sanpham'=>$sanpham, 'sp_lien_quan'=>$sp_lien_quan, 'sp_moi'=>$sp_moi,'sp_bs'=>$sp_bs]);
     }    
    
     function getAbout(){
