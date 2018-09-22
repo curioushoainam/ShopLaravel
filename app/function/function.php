@@ -127,7 +127,7 @@ function error($err){
 
 
 function highlight($str,$keyword){
-	return str_replace($keyword, "<span style='color: red;'><i>$keyword</i></span>", $str);
+	return str_replace($keyword, "<span style='color: red;'><i><b>$keyword</b></i></span>", $str);
 }
 
 ?>

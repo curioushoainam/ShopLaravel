@@ -38,3 +38,5 @@ Route::get('dang-xuat', 'PagesController@getLogout')->name('logout');
 
 Route::get('thong-tin-nguoi-dung', 'PagesController@getUserInfo')->name('userinfo');
 Route::post('thong-tin-nguoi-dung', 'PagesController@postUserInfo')->name('userinfo');
+
+Route::get('search','PagesController@getSearch')->name('search');

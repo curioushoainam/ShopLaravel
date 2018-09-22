@@ -257,4 +257,27 @@ class PagesController extends Controller
         $user->save();
         return redirect()->back()->with('msg','Thông tin đã được cập nhật thành công');
     }
+
+    function getSearch(Request $req){
+        $this->validate($req,[
+                'keyword'=>'required'
+            ],[
+                'keyword.required'=>'Bạn vui lòng nhập ký muốn tìm'
+            ]
+        );
+
+        $keyword = $req->keyword;
+        $products = Products::where('name','like','%'.$keyword.'%')
+                                ->orWhere('unit_price',$keyword)                               
+                                ->paginate(16)->appends(['keyword' => $keyword]);;
+
+        $count = Products::where('name','like','%'.$keyword.'%')
+                                ->orWhere('unit_price',$keyword)                                
+                                ->count();
+
+        return view('pages.search', compact('products', 'count', 'keyword'));
+    }
+
+
 }
+// end of class

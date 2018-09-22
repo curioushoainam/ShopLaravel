@@ -3,8 +3,8 @@
 		<div class="container">
 			<div class="pull-left auto-width-left">
 				<ul class="top-menu menu-beta l-inline">
-					<li><a href=""><i class="fa fa-home"></i> 90-92 Lê Thị Riêng, Bến Thành, Quận 1</a></li>
-					<li><a href=""><i class="fa fa-phone"></i> 0163 296 7751</a></li>
+					<li><a href=""><i class="fa fa-home"></i> HCM city - Vietnam - the Earth - the Sun system</a></li>
+					<li><a href=""><i class="fa fa-phone"></i> 123 123 1234</a></li>
 				</ul>
 			</div>
 			<div class="pull-right auto-width-right">
@@ -31,8 +31,9 @@
 			<div class="pull-right beta-components space-left ov">
 				<div class="space10">&nbsp;</div>
 				<div class="beta-comp">
-					<form role="search" method="get" id="searchform" action="/">
-				        <input type="text" value="" name="s" id="s" placeholder="Nhập từ khóa..." />
+					<form role="search" method="get" id="searchform" action="{{ route('search') }}">
+						{{-- <input type="hidden" name="_token" value="{{csrf_token()}}"> --}}
+				        <input type="text" value="" name="keyword" id="s" placeholder="Nhập từ khóa..." />
 				        <button class="fa fa-search" type="submit" id="searchsubmit"></button>
 					</form>
 				</div>
