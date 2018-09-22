@@ -28,3 +28,13 @@ Route::get('xoa-sp-khoi-gio-hang/{id}', 'PagesController@getRemoveFromCart')->na
 Route::get('dat-hang', 'PagesController@getCheckout')->name('checkout');
 Route::post('dat-hang', 'PagesController@postCheckout')->name('setcheckout');
 
+Route::get('dang-ky', 'PagesController@getSignup')->name('signup');
+Route::post('dang-ky', 'PagesController@postSignup')->name('signup');
+
+Route::get('dang-nhap', 'PagesController@getLogin')->name('login');
+Route::post('dang-nhap', 'PagesController@postLogin')->name('login');
+
+Route::get('dang-xuat', 'PagesController@getLogout')->name('logout');
+
+Route::get('thong-tin-nguoi-dung', 'PagesController@getUserInfo')->name('userinfo');
+Route::post('thong-tin-nguoi-dung', 'PagesController@postUserInfo')->name('userinfo');

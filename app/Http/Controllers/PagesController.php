@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use \App\Slide;
 use \App\Products;
@@ -12,6 +13,7 @@ use \App\Cart;
 use \App\Customer;
 use \App\Bills;
 use \App\Bill_detail;
+use \App\User;
 
 class PagesController extends Controller
 {
@@ -136,6 +138,123 @@ class PagesController extends Controller
         Session::forget('cart');
 
         return redirect()->back()->with('msg','Đặt hàng thành công');
+    }   
+
+    public function getSignup(){
+        return view('pages.signup');
     }
 
+    public function postSignup(Request $req){
+        $this->validate($req, [
+                'email'=>'required|email|unique:users,email',
+                'full_name'=>'required|min:4|max:255',                
+                'phone'=>'required',
+                'password'=>'required|min:6|max:25',
+                'repassword'=>'required|same:password',
+                
+            ],[
+                'email.required'=>'Bạn chưa nhập email',
+                'email.email'=>'Địa chỉ email không hợp lệ',
+                'email.unique'=>'email đã được sử dụng',
+
+                'full_name.required'=>'Bạn chưa nhập tên',
+                'full_name.min'=>'Tên phải có từ 3 đến 255 ký tự',
+                'full_name.max'=>'Tên phải có từ 3 đến 255 ký tự',                
+
+                'password.required'=>'Bạn chưa nhập passowrd',
+                'password.min'=>'Password phải có từ 6 đến 25 ký tự',
+                'password.max'=>'Password phải có từ 6 đến 25 ký tự',
+
+                'repassword.required'=>'Bạn chưa nhập lại passowrd',
+                'repassword.same'=>'Bạn nhập lại password không khớp'
+            ]
+        );
+
+        $user = new User();
+        $user->full_name = $req->full_name;
+        $user->email = $req->email;
+        $user->phone = $req->phone;        
+        $user->address = $req->address;
+        $user->password = bcrypt($req->password);
+        $user->save();
+
+        return redirect()->back()->with('msg','Chúc mừng bạn đã đăng ký thành công');
+
+    }
+
+    public function getLogin(){
+        return view('pages.login');
+    }
+
+    public function postLogin(Request $req){
+        $this->validate($req, [
+                'email'=>'required|email',                
+                'password'=>'required|min:6|max:25'
+            ],[
+                'email.required'=>'Bạn chưa nhập email',
+                'email.email'=>'Địa chỉ email không hợp lệ',
+                
+                'password.required'=>'Bạn chưa nhập passowrd',
+                'password.min'=>'Password phải có từ 6 đến 25 ký tự',
+                'password.max'=>'Password phải có từ 6 đến 25 ký tự'
+            ]
+        );
+
+        if(Auth::attempt(['email'=>$req->email, 'password'=>$req->password]))
+            return redirect('trang-chu');
+        else
+            return redirect()->back()->with('error','Email hoặc Password không đúng O-O');
+        
+    }
+
+    public function getLogout(){
+        Auth::logout();
+
+        return redirect('trang-chu');
+    }
+
+    public function getUserInfo(){        
+        return view('pages.userInfo');
+    }
+
+    public function postUserInfo(Request $req){
+         $this->validate($req, [
+                'email'=>'required|email',
+                'full_name'=>'required|min:4|max:255',                
+                'phone'=>'required'
+                
+            ],[
+                'email.required'=>'Bạn chưa nhập email',
+                'email.email'=>'Địa chỉ email không hợp lệ',                
+
+                'full_name.required'=>'Bạn chưa nhập tên',
+                'full_name.min'=>'Tên phải có từ 3 đến 255 ký tự',
+                'full_name.max'=>'Tên phải có từ 3 đến 255 ký tự' 
+            ]
+        );
+
+        $user = Auth::user();
+        $user->full_name = $req->full_name;
+        $user->email = $req->email;
+        $user->phone = $req->phone; 
+        $user->address = $req->address;
+        if($req->changePassword == 'on'){
+            $this->validate($req,[
+                    'password'=>'required|min:6|max:25',
+                    'repassword'=>'required|same:password',
+                ],[
+                    'password.required'=>'Bạn chưa nhập passowrd',
+                    'password.min'=>'Password phải có từ 6 đến 25 ký tự',
+                    'password.max'=>'Password phải có từ 6 đến 25 ký tự',
+
+                    'repassword.required'=>'Bạn chưa nhập lại passowrd',
+                    'repassword.same'=>'Bạn nhập lại password không khớp'
+                ]
+            );
+            $user->password = bcrypt($req->password);
+        } 
+        
+        $user->save();
+        return redirect()->back()->with('msg','Thông tin đã được cập nhật thành công');
+    }
 }
