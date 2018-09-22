@@ -168,18 +168,33 @@ class PagesController extends Controller
                 'repassword.required'=>'Bạn chưa nhập lại passowrd',
                 'repassword.same'=>'Bạn nhập lại password không khớp'
             ]
-        );
+        );        
 
-        $user = new User();
-        $user->full_name = $req->full_name;
-        $user->email = $req->email;
-        $user->phone = $req->phone;        
-        $user->address = $req->address;
-        $user->password = bcrypt($req->password);
-        $user->save();
+        $token = $req->input('g-recaptcha-response');  
+        $secretKey = '6LdclHEUAAAAAAJlk6IdYsEJNooJPJ_L-zwU-WjX';
 
-        return redirect()->back()->with('msg','Chúc mừng bạn đã đăng ký thành công');
+        if( $token){
+            $apiurl = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secretKey.'&response='.$token.'&remoteip='.$_SERVER['SERVER_ADDR'];//$_POST['g-recaptcha-response']
 
+            $response = file_get_contents($apiurl);
+            $captchaObj = json_decode($response);         
+           
+            if($captchaObj->success){
+                $user = new User();
+                $user->full_name = $req->full_name;
+                $user->email = $req->email;
+                $user->phone = $req->phone;        
+                $user->address = $req->address;
+                $user->password = bcrypt($req->password);
+                $user->save();
+                
+                return redirect()->back()->with('msg','Chúc mừng bạn đã đăng ký thành công'); 
+            } else {
+                return redirect()->back()->with('error','Đã có lỗi xác nhận Captcha');
+            }
+        }else
+            return redirect()->back()->with('error','Đã có lỗi Captcha token');
+        
     }
 
     public function getLogin(){

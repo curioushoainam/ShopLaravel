@@ -17,6 +17,9 @@
 	<link rel="stylesheet" title="style" href="public/assets/dest/css/style.css">
 	<link rel="stylesheet" href="public/assets/dest/css/animate.css">
 	<link rel="stylesheet" title="style" href="public/assets/dest/css/huong-style.css">
+	
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+
 
 	@yield('css')
 </head>

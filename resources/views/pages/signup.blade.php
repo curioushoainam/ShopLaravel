@@ -22,8 +22,8 @@
 	<div id="content">
 		{!! errors($errors->all()) !!}
 		{!! message(session('msg')) !!}
-		
-		<form action="{{ route('signup') }}" method="post" class="beta-form-checkout">
+		{!! error(session('error')) !!}
+		<form action="{{ route('signup') }}" method="post" class="beta-form-checkout" id="form">
 			<input type="hidden" name="_token" value="{{csrf_token()}}">
 			<div class="row">
 				<div class="col-sm-3"></div>
@@ -60,6 +60,12 @@
 						<label for="repassword">Re password*</label>
 						<input type="password" id="repassword" name="repassword" placeholder="nhập lại mật khẩu" required>
 					</div>
+
+					<div class="form-block">
+						<label for="repassword">&nbsp</label>
+						<div class="g-recaptcha" data-sitekey="6LdclHEUAAAAAPTL77MofUNVAoqUnwDEbjHQ2WW_"></div>	
+					</div>
+
 					<div class="form-block">
 						<button type="submit" class="btn btn-primary">Đăng ký</button>
 					</div>
@@ -70,4 +76,19 @@
 	</div> <!-- #content -->
 </div> <!-- .container -->
 
+@endsection
+
+@section('script')
+	<script>
+		// composer require guzzlehttp/guzzle
+		// https://curl.haxx.se/docs/caextract.html
+		// Obligate the user to check prior to submit
+		$('#form').submit(function(event){
+			var verified = grecaptcha.getResponse();			
+			if(verified == 0){
+				event.preventDefault();
+			}
+		});
+			
+	</script>
 @endsection
