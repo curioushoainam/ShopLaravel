@@ -14,7 +14,7 @@ use \App\Customer;
 use \App\Bills;
 use \App\Bill_detail;
 use \App\User;
-
+use Mail;
 class PagesController extends Controller
 {
 	// the controller is used to demo. It is not a part of the website
@@ -293,6 +293,16 @@ class PagesController extends Controller
         return view('pages.search', compact('products', 'count', 'keyword'));
     }
 
+    function sendEmail(){
+        $data = array();
+        Mail::send('pages.email',$data, function($msg){
+            $msg->from('phpcode127@gmail.com','phpcode127');
+            $msg->to('curiousnamhoaitruong@gmail.com','vhd');
+            $msg->subject('Guten Tag !');
+        });
+
+        echo 'Sent successfully';
+    }
 
 }
 // end of class

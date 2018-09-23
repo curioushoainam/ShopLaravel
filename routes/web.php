@@ -40,3 +40,5 @@ Route::get('thong-tin-nguoi-dung', 'PagesController@getUserInfo')->name('userinf
 Route::post('thong-tin-nguoi-dung', 'PagesController@postUserInfo')->name('userinfo');
 
 Route::get('search','PagesController@getSearch')->name('search');
+
+Route::get('email/send','MailController@sendEmail')->name('sendEmail');
